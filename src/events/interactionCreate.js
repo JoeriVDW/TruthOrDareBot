@@ -1,4 +1,5 @@
 const { Events } = require("discord.js");
+const tod = require("../commands/tod.js");
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -18,7 +19,11 @@ module.exports = {
                 await interaction.reply({ content: "There was an error while executing the command!", ephemeral: true})
             }
         } else if(interaction.isButton()) {
-
+            await interaction.reply({
+                embeds: [await tod.getQuestionEmbed(interaction.customId, interaction.user)],
+                ephemeral: false,
+                components: [await tod.getRow()]
+            });
         }
     }
 }
